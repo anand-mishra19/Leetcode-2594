@@ -1,0 +1,23 @@
+class Solution:
+    def repairCars(self, ranks: List[int], cars: int) -> int:
+        def canRepairInTime(time):
+            total_cars_repaired = 0
+            for rank in ranks:
+                total_cars_repaired += int((time // rank) ** 0.5)
+            return total_cars_repaired >= cars
+
+        left, right = 1, max(ranks) * cars * cars
+        while left < right:
+            mid = (left + right) // 2
+            if canRepairInTime(mid):
+                right = mid
+            else:
+                left = mid + 1
+        return left
+
+# Example usage
+if __name__ == "__main__":
+    ranks = [4, 2, 3]
+    cars = 10
+    solution = Solution()
+    print(solution.repairCars(ranks, cars)) 
